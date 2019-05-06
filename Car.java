@@ -17,13 +17,26 @@ public class Car extends SmoothMover
     private double acceleration = 0.07;
     private double speed = 0;
     private String up = "W", left = "A", right = "D";
-   
+    public String name = "";
+    
+    public Car (String name)
+    {
+        this.name = name;
+    }
+
+    public void destroy()
+    {
+        getWorld().addObject(new Explosion(), getX(), getY());
+        getWorld().removeObject(this);
+    }
+    
     public void changeControls(String up, String left, String right)
     {
         this.up = up;
         this.left = left;
         this.right = right;
     }
+    
     private void accelerate()
     {
             if(Greenfoot.isKeyDown(this.up))
@@ -34,11 +47,11 @@ public class Car extends SmoothMover
             {
                 this.speed -= this.acceleration;
             }
-            //if(checkCollide((int)speed))
-            //{
-            //    turn(180);
-            //    speed = 1;
-            //}
+            if(checkCollide((int)speed))
+            {
+                turn(Greenfoot.getRandomNumber(150));
+                speed = 2;
+            }
             move(this.speed);
             if(this.speed > 3) this.speed = 3;
             else if(this.speed <=0) this.speed = 0;
@@ -73,17 +86,11 @@ public class Car extends SmoothMover
     {
         int dx = (int) (Math.cos(Math.toRadians(getRotation())) * off);
         int dy = (int) (Math.sin(Math.toRadians(getRotation())) * off);
-        Actor obstacle = getOneObjectAtOffset(dx,dy, Obstacle.class);
+        Actor obstacle = getOneObjectAtOffset(dx,dy, Car.class);
         if(obstacle != null)
         {
             return true;
         }
         return false;
-    }
-    
-    public void explode()
-    {
-        getWorld().addObject(new Explosion(), getX(), getY());
-        getWorld().removeObject(this);
     }
 }

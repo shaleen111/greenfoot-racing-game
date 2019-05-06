@@ -13,21 +13,17 @@ public class Explosion extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int timer;
-    static boolean isPlay = true;
+    //static boolean isPlay = true;
     
     public Explosion()
     {
-        if(!isPlay)
-        {
-            Greenfoot.playSound("boom.wav");
-            isPlay = true;
-        }
+        Greenfoot.playSound("boom.wav");
     }
     
     public void act() 
     {
         // Add your action code here.
-        if(this.timer >= 200)
+        if(this.timer >= 160)
         {
              getWorld().removeObject(this);
         }

@@ -15,21 +15,27 @@ public class Rock extends Actor
     public void act() 
     {
         // Add your action code here.
-        if(isTouching(Car.class))
+        if(!getIntersectingObjects(Car.class).isEmpty())
         {
-            getWorld().getObjects(Car.class).get(0).explode();
+            
+           
+            Car crashed = getIntersectingObjects(Car.class).get(0);
+            getWorld().addObject(new GameOver(crashed.name + " Lost"), 600, 320);
+            
+            crashed.destroy();
             explode();
         }
-        else if(isTouching(Debris.class))
+        else if(!getIntersectingObjects(Debris.class).isEmpty())
         {
             getWorld().addObject(new Explosion(), getX(), getY());
+            getWorld().removeObject(getIntersectingObjects(Debris.class).get(0));
             getWorld().removeObject(this);
         }
     }    
     
     public void explode()
     {
-        placeDebris(getX(), getY(), 15);
+        placeDebris(getX(), getY(), 10);
         getWorld().removeObject(this);
     }
     
@@ -40,4 +46,5 @@ public class Rock extends Actor
             getWorld().addObject(new Debris(), x, y);
         }
     }
+    
 }

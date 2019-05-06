@@ -13,7 +13,7 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
-    //public boolean alreadyPlay = false;
+    public boolean alreadyPlay = false;
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -22,6 +22,7 @@ public class MyWorld extends World
         
         bg.scale(getWidth(), getHeight());
         setBackground(bg);
+               
         
         Car.width = getWidth();
         Car.height = getHeight();
@@ -222,20 +223,25 @@ public class MyWorld extends World
         addObject(rock92,68,587);
         Rock rock93 = new Rock();
         addObject(rock93,1103,63);
-        Car car = new Car();
+        Car car = new Car("Player Two");
         car.changeControls("up", "left", "right");
         addObject(car,630,601);
-        Car car2 = new Car();
+        Car car2 = new Car("Player One");
         addObject(car2,633,567);
+
+        Finish finish = new Finish();
+        addObject(finish,608,589);
+        car2.setLocation(691,568);
+        car.setLocation(695,597);
     }
 
     public void act()
     {
-        //if(!alreadyPlay)
-        //{
-        //    alreadyPlay = true;
-        //    GreenfootSound bgS = new GreenfootSound("bg.wav");
-        //    bgS.playLoop();
-        //}
+        if(!alreadyPlay)
+        {
+            alreadyPlay = true;
+            GreenfootSound bgS = new GreenfootSound("bg.wav");
+            bgS.playLoop();
+        }
     }
 }
